@@ -1,0 +1,50 @@
+{
+  "name": "leetcode-topic-filter",
+  "version": "1.0.0",
+  "description": "A VS Code extension to filter LeetCode problems by exact topics",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "node test-filter.js",
+    "test-topic-index": "node test-topic-index.js",
+    "verify-exact": "node verify-exact-matching.js",
+    "test-updated": "node test-updated.js",
+    "test-improved": "node test-improved.js",
+    "test-final": "node test-final.js",
+    "test-improved-final": "node test-improved-final.js",
+    "test-direct": "node test-direct.js",
+    "test-known-topics": "node test-known-topics.js",
+    "test-fetch": "node test-fetch.js",
+    "test-direct-filter": "node direct-filter-test.js",
+    "test-force-refresh": "node force-refresh-test.js",
+    "test-full": "node full-test.js",
+    "test-http": "node direct-http-test.js",
+    "force-refresh": "node force-refresh.js",
+    "capture-output": "node capture-output.js",
+    "debug-content": "node debug-content.js",
+    "integration-test": "node integration-test.js",
+    "debug": "node debug.js",
+    "debug-specific": "node debug-specific.js",
+    "debug-extraction": "node debug-extraction.js",
+    "debug-tags": "node debug-tags.js",
+    "debug-structure": "node debug-structure.js",
+    "debug-actual-tags": "node debug-actual-tags.js"
+  },
+  "keywords": [
+    "leetcode",
+    "vscode",
+    "extension",
+    "filter"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0",
+    "puppeteer": "^24.22.0",
+    "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "vscode": "^1.74.0"
+  }
+}

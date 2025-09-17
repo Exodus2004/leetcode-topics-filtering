@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Topic Filter</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #3794ff;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            background-color: #3c3c3c;
+            color: #d4d4d4;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: #0e639c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        
+        button:hover {
+            background-color: #1177bb;
+        }
+        
+        button:disabled {
+            background-color: #3c3c3c;
+            cursor: not-allowed;
+        }
+        
+        #results {
+            margin-top: 20px;
+        }
+        
+        .problem {
+            background-color: #2d2d30;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .problem-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #3794ff;
+            margin-bottom: 5px;
+        }
+        
+        .problem-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .tag {
+            background-color: #007acc;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3794ff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            color: #f48771;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #f48771;
+            border-radius: 4px;
+            background-color: rgba(244, 135, 113, 0.1);
+        }
+        
+        .info {
+            color: #3794ff;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #3794ff;
+            border-radius: 4px;
+            background-color: rgba(55, 148, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LeetCode Topic Filter</h1>
+        <div class="input-group">
+            <label for="topics">Enter topics (comma-separated):</label>
+            <input type="text" id="topics" placeholder="e.g., array, hash table">
+        </div>
+        <button id="filter-btn">Filter Problems</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        document.getElementById('filter-btn').addEventListener('click', async () => {
+            const topicsInput = document.getElementById('topics').value;
+            const resultsDiv = document.getElementById('results');
+            const filterBtn = document.getElementById('filter-btn');
+            
+            if (!topicsInput.trim()) {
+                resultsDiv.innerHTML = '<div class="error">Please enter at least one topic</div>';
+                return;
+            }
+            
+            const topics = topicsInput.split(',').map(topic => topic.trim()).filter(topic => topic);
+            
+            // Disable button and show loading
+            filterBtn.disabled = true;
+            resultsDiv.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Fetching problems from LeetCode...</p>
+                    <p class="info">This may take 1-2 minutes on first load.<br>Subsequent requests will be faster due to caching.</p>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('http://localhost:3000/filter', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ topics })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    resultsDiv.innerHTML = `<div class="error">
+                        <p>${data.error || 'Error fetching problems. Please try again.'}</p>
+                        <p class="info">If this persists, check the server console for detailed error messages.</p>
+                    </div>`;
+                    return;
+                }
+                
+                if (data.problems.length === 0) {
+                    resultsDiv.innerHTML = '<div class="error">No problems found matching all selected topics. Try different topic combinations.</div>';
+                    return;
+                }
+                
+                const problemsHTML = data.problems.map(problem => `
+                    <div class="problem">
+                        <div class="problem-title">${problem.title}</div>
+                        <div class="problem-tags">
+                            ${problem.tags && problem.tags.length > 0 
+                                ? problem.tags.map(tag => `<span class="tag">${tag}</span>`).join('')
+                                : '<span class="tag">No tags available</span>'}
+                        </div>
+                    </div>
+                `).join('');
+                
+                resultsDiv.innerHTML = problemsHTML;
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error">
+                    <p>Error connecting to server: ${error.message}</p>
+                    <p class="info">Make sure the server is running.<br>Start it with: npm start</p>
+                </div>`;
+            } finally {
+                filterBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
