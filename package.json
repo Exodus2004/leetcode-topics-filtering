@@ -1,11 +1,12 @@
 {
   "name": "leetcode-topic-filter",
   "version": "1.0.0",
-  "description": "A VS Code extension to filter LeetCode problems by exact topics",
-  "main": "index.js",
+  "description": "A tool to filter LeetCode problems by exact topics",
+  "main": "api/index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "node index.js",
+    "vercel-build": "echo 'Build completed'",
     "test": "node test-filter.js",
     "test-topic-index": "node test-topic-index.js",
     "verify-exact": "node verify-exact-matching.js",
@@ -33,18 +34,15 @@
   },
   "keywords": [
     "leetcode",
-    "vscode",
-    "extension",
-    "filter"
+    "filter",
+    "topics"
   ],
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "express": "^5.1.0",
-    "puppeteer": "^24.22.0",
-    "node-fetch": "^3.3.2"
+    "express": "^5.1.0"
   },
   "engines": {
-    "vscode": "^1.74.0"
+    "node": ">=14.x"
   }
 }
