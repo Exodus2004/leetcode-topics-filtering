@@ -1,8 +1,22 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const knownProblemTopics = require('../known-topics');
-const { topicIndex, questionTopicsMap, getQuestionsWithExactTopics } = require('../topic-index');
+
+// Import the topic index module
+let topicModules;
+try {
+    topicModules = require('../topic-index');
+} catch (error) {
+    console.error('Error loading topic-index module:', error);
+    // Provide fallback empty objects to prevent crashes
+    topicModules = {
+        topicIndex: {},
+        questionTopicsMap: {},
+        getQuestionsWithExactTopics: () => []
+    };
+}
+
+const { topicIndex, questionTopicsMap, getQuestionsWithExactTopics } = topicModules;
 
 // Create an Express app
 const app = express();
@@ -10,34 +24,17 @@ const app = express();
 // Middleware to parse JSON
 app.use(express.json());
 
-// Serve the UI
+// Serve the UI for the root route
 app.get('/', (req, res) => {
-    const filePath = path.join(__dirname, '../ui.html');
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading UI file:', err);
-            res.status(500).send('Error loading UI');
-            return;
-        }
+    try {
+        const filePath = path.join(__dirname, '../ui.html');
+        const data = fs.readFileSync(filePath, 'utf8');
         res.setHeader('Content-Type', 'text/html');
         res.send(data);
-    });
-});
-
-// Serve static files (CSS, JS, etc.)
-app.get('/(.*)', (req, res) => {
-    // For any other route, serve the UI HTML file
-    // This handles client-side routing
-    const filePath = path.join(__dirname, '../ui.html');
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading UI file:', err);
-            res.status(500).send('Error loading UI');
-            return;
-        }
-        res.setHeader('Content-Type', 'text/html');
-        res.send(data);
-    });
+    } catch (err) {
+        console.error('Error reading UI file:', err);
+        res.status(500).send('Error loading UI');
+    }
 });
 
 // POST endpoint to filter problems
@@ -71,6 +68,19 @@ app.post('/filter', async (req, res) => {
             error: 'Failed to filter problems. Please try again later.',
             problems: []
         });
+    }
+});
+
+// For any other route, serve the UI HTML file (client-side routing)
+app.use((req, res) => {
+    try {
+        const filePath = path.join(__dirname, '../ui.html');
+        const data = fs.readFileSync(filePath, 'utf8');
+        res.setHeader('Content-Type', 'text/html');
+        res.send(data);
+    } catch (err) {
+        console.error('Error reading UI file:', err);
+        res.status(500).send('Error loading UI');
     }
 });
 
