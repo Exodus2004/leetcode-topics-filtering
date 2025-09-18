@@ -1,0 +1,1 @@
+// Extract all unique topics from the topic index\nconst { topicIndex } = require('./topic-index');\n\n// Get all unique topics\nconst allTopics = Object.keys(topicIndex).sort();\n\nconsole.log('Available topics:');\nallTopics.forEach(topic => {\n    console.log(`- ${topic}`);\n});\n\nconsole.log(`\\nTotal topics: ${allTopics.length}`);

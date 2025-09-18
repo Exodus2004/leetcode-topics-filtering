@@ -112,7 +112,7 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 24px;
         }
@@ -163,31 +163,6 @@
             transition: color var(--transition-fast);
         }
         
-        input {
-            width: 100%;
-            padding: 16px 20px;
-            border-radius: var(--stripe-radius-sm);
-            background-color: var(--stripe-input-bg);
-            color: var(--stripe-light-text);
-            box-sizing: border-box;
-            font-size: 18px;
-            transition: all var(--transition-fast);
-            outline: none;
-            border: 1px solid var(--stripe-border);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            font-family: "Times New Roman", Times, serif;
-        }
-        
-        input:focus {
-            border-color: var(--stripe-accent);
-            box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.3);
-        }
-        
-        input::placeholder {
-            color: #d0cfff;
-        }
-        
         button {
             background-color: var(--stripe-button-bg);
             color: white;
@@ -197,7 +172,6 @@
             cursor: pointer;
             font-size: 20px;
             font-weight: 600;
-            width: 100%;
             transition: all var(--transition-fast);
             box-shadow: var(--stripe-shadow);
             position: relative;
@@ -497,6 +471,179 @@
                 opacity: 1;
             }
         }
+        
+        /* Topic buttons styles */
+        .topic-buttons-container {
+            margin-bottom: 20px;
+        }
+        
+        .topic-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            border-radius: var(--stripe-radius-sm);
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Custom scrollbar styling */
+        .topic-buttons-grid::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .topic-buttons-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        
+        .topic-buttons-grid::-webkit-scrollbar-thumb {
+            background: var(--stripe-accent);
+            border-radius: 4px;
+        }
+        
+        .topic-buttons-grid::-webkit-scrollbar-thumb:hover {
+            background: var(--stripe-accent-hover);
+        }
+        
+        /* For Firefox */
+        .topic-buttons-grid {
+            scrollbar-width: thin;
+            scrollbar-color: var(--stripe-accent) rgba(255, 255, 255, 0.05);
+        }
+        
+        .topic-btn {
+            background-color: var(--stripe-tag-bg);
+            color: var(--stripe-light-text);
+            border: 1px solid var(--stripe-border);
+            border-radius: 30px; /* Circular borders */
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            text-align: center;
+            box-shadow: none;
+            font-family: "Times New Roman", Times, serif;
+        }
+        
+        .topic-btn:hover {
+            background-color: var(--stripe-accent);
+            transform: translateY(-2px);
+            box-shadow: var(--stripe-shadow);
+        }
+        
+        .topic-btn.selected {
+            background-color: var(--stripe-accent);
+            border-color: var(--stripe-accent-hover);
+            box-shadow: var(--stripe-shadow);
+            transform: translateY(-2px);
+        }
+        
+        .topic-btn.selected:hover {
+            background-color: #7b73ff;
+        }
+        
+        .selected-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            min-height: 40px;
+        }
+        
+        .selected-topic {
+            background-color: var(--stripe-accent);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: "Times New Roman", Times, serif;
+        }
+        
+        .remove-topic {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .topic-instructions {
+            font-size: 14px;
+            color: var(--stripe-muted-text);
+            margin-top: 15px;
+            font-style: italic;
+            text-align: center;
+            font-family: "Times New Roman", Times, serif;
+        }
+        
+        .clear-all-btn {
+            background-color: var(--stripe-error);
+            color: white;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: var(--stripe-radius-sm);
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            margin-top: 15px;
+            width: auto;
+            display: inline-block;
+            font-family: "Times New Roman", Times, serif;
+        }
+        
+        .clear-all-btn:hover {
+            background-color: #ff5555;
+            border-color: #ff6666;
+        }
+        
+        .selected-topics-header {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--stripe-light-text);
+            font-family: "Times New Roman", Times, serif;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .topic-buttons-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .card {
+                padding: 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .topic-buttons-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+        }
     </style>
 </head>
 <body>
@@ -509,8 +656,18 @@
         </div>
         <div class="card glass-card fade-in">
             <div class="input-group">
-                <label for="topics">Enter topics (comma-separated):</label>
-                <input type="text" id="topics" placeholder="e.g., array, hash table, dynamic programming">
+                <label>Select Topics:</label>
+                <div class="topic-buttons-container">
+                    <div class="topic-buttons-grid" id="topic-buttons-container">
+                        <!-- Topic buttons will be added here dynamically -->
+                    </div>
+                    <div class="selected-topics-header">Selected Topics:</div>
+                    <div class="selected-topics" id="selected-topics-container">
+                        <!-- Selected topics will be added here dynamically -->
+                    </div>
+                    <button id="clear-all-btn" class="clear-all-btn">Clear All Topics</button>
+                    <p class="topic-instructions">Click on topic buttons to select them. Add one or more topics and click "Filter Problems" to find LeetCode problems matching ALL selected topics.</p>
+                </div>
             </div>
             <button id="filter-btn">Filter Problems</button>
         </div>
@@ -518,7 +675,171 @@
     </div>
 
     <script>
-        // Add ripple effect to button
+        // All available topics
+        const ALL_TOPICS = [
+          "array",
+          "backtracking",
+          "biconnected component",
+          "binary indexed tree",
+          "binary search",
+          "binary search tree",
+          "binary tree",
+          "bit manipulation",
+          "bitmask",
+          "brainteaser",
+          "breadth-first search",
+          "bucket sort",
+          "combinatorics",
+          "concurrency",
+          "counting",
+          "counting sort",
+          "data stream",
+          "database",
+          "depth-first search",
+          "design",
+          "divide and conquer",
+          "doubly-linked list",
+          "dynamic programming",
+          "enumeration",
+          "eulerian circuit",
+          "game theory",
+          "geometry",
+          "graph",
+          "greedy",
+          "hash function",
+          "hash table",
+          "heap (priority queue)",
+          "interactive",
+          "iterator",
+          "line sweep",
+          "linked list",
+          "math",
+          "matrix",
+          "memoization",
+          "merge sort",
+          "minimum spanning tree",
+          "monotonic queue",
+          "monotonic stack",
+          "number theory",
+          "ordered set",
+          "prefix sum",
+          "probability and statistics",
+          "queue",
+          "quickselect",
+          "radix sort",
+          "randomized",
+          "recursion",
+          "rejection sampling",
+          "reservoir sampling",
+          "rolling hash",
+          "segment tree",
+          "shell",
+          "shortest path",
+          "simulation",
+          "sliding window",
+          "sort",
+          "sorting",
+          "stack",
+          "string",
+          "string matching",
+          "strongly connected component",
+          "suffix array",
+          "topological sort",
+          "tree",
+          "trie",
+          "two pointers",
+          "union find",
+        ];
+        
+        // Keep track of selected topics
+        let selectedTopics = [];
+        
+        // Initialize the topic buttons
+        function initializeTopicButtons() {
+            const container = document.getElementById('topic-buttons-container');
+            container.innerHTML = '';
+            
+            // Add all topics as buttons
+            ALL_TOPICS.forEach(topic => {
+                const button = document.createElement('button');
+                button.className = 'topic-btn';
+                button.textContent = topic;
+                button.setAttribute('data-topic', topic);
+                button.addEventListener('click', () => toggleTopicSelection(topic));
+                container.appendChild(button);
+            });
+        }
+        
+        // Toggle topic selection
+        function toggleTopicSelection(topic) {
+            if (selectedTopics.includes(topic)) {
+                // Remove topic
+                selectedTopics = selectedTopics.filter(t => t !== topic);
+            } else {
+                // Add topic
+                selectedTopics.push(topic);
+            }
+            updateUI();
+        }
+        
+        // Update UI after selection changes
+        function updateUI() {
+            // Update button states
+            document.querySelectorAll('.topic-btn').forEach(button => {
+                const topic = button.getAttribute('data-topic');
+                if (selectedTopics.includes(topic)) {
+                    button.classList.add('selected');
+                } else {
+                    button.classList.remove('selected');
+                }
+            });
+            
+            // Update selected topics display
+            renderSelectedTopics();
+        }
+        
+        // Remove a topic from the selected topics list
+        function removeSelectedTopic(topic) {
+            selectedTopics = selectedTopics.filter(t => t !== topic);
+            updateUI();
+        }
+        
+        // Clear all selected topics
+        function clearAllTopics() {
+            selectedTopics = [];
+            updateUI();
+        }
+        
+        // Render the selected topics
+        function renderSelectedTopics() {
+            const container = document.getElementById('selected-topics-container');
+            container.innerHTML = '';
+            
+            if (selectedTopics.length === 0) {
+                container.innerHTML = '<div class="topic-instructions">No topics selected yet</div>';
+                return;
+            }
+            
+            selectedTopics.forEach(topic => {
+                const topicElement = document.createElement('div');
+                topicElement.className = 'selected-topic';
+                topicElement.innerHTML = `
+                    <span>${topic}</span>
+                    <button class="remove-topic" data-topic="${topic}">×</button>
+                `;
+                container.appendChild(topicElement);
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-topic').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const topic = e.target.getAttribute('data-topic');
+                    removeSelectedTopic(topic);
+                });
+            });
+        }
+        
+        // Add ripple effect to filter button
         document.getElementById('filter-btn').addEventListener('click', function(e) {
             const button = e.currentTarget;
             const ripple = document.createElement('span');
@@ -542,17 +863,19 @@
             filterProblems();
         });
         
+        // Clear all topics button event listener
+        document.getElementById('clear-all-btn').addEventListener('click', function() {
+            clearAllTopics();
+        });
+        
         async function filterProblems() {
-            const topicsInput = document.getElementById('topics').value;
             const resultsDiv = document.getElementById('results');
             const filterBtn = document.getElementById('filter-btn');
             
-            if (!topicsInput.trim()) {
-                resultsDiv.innerHTML = '<div class="error fade-in" style="color: #ffffff; font-weight: bold;">Please enter at least one topic</div>';
+            if (selectedTopics.length === 0) {
+                resultsDiv.innerHTML = '<div class="error fade-in" style="color: #ffffff; font-weight: bold;">Please select at least one topic</div>';
                 return;
             }
-            
-            const topics = topicsInput.split(',').map(topic => topic.trim()).filter(topic => topic);
             
             // Disable button and show loading with skeleton
             filterBtn.disabled = true;
@@ -595,7 +918,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ topics })
+                    body: JSON.stringify({ topics: selectedTopics })
                 });
                 
                 const data = await response.json();
@@ -635,11 +958,10 @@
             }
         }
         
-        // Add enter key support for input
-        document.getElementById('topics').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('filter-btn').click();
-            }
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTopicButtons();
+            renderSelectedTopics(); // Show initial "No topics selected" message
         });
     </script>
 </body>
