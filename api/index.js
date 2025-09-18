@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const knownProblemTopics = require('../known-topics');
 const { topicIndex, questionTopicsMap, getQuestionsWithExactTopics } = require('../topic-index');
 
@@ -11,11 +12,33 @@ app.use(express.json());
 
 // Serve the UI
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../ui.html'));
+    const filePath = path.join(__dirname, '../ui.html');
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading UI file:', err);
+            res.status(500).send('Error loading UI');
+            return;
+        }
+        res.setHeader('Content-Type', 'text/html');
+        res.send(data);
+    });
 });
 
-// Serve static files
-app.use(express.static(path.join(__dirname, '../')));
+// Serve static files (CSS, JS, etc.)
+app.get('/(.*)', (req, res) => {
+    // For any other route, serve the UI HTML file
+    // This handles client-side routing
+    const filePath = path.join(__dirname, '../ui.html');
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading UI file:', err);
+            res.status(500).send('Error loading UI');
+            return;
+        }
+        res.setHeader('Content-Type', 'text/html');
+        res.send(data);
+    });
+});
 
 // POST endpoint to filter problems
 app.post('/filter', async (req, res) => {
