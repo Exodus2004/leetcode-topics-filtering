@@ -6,7 +6,7 @@ A tool to filter LeetCode problems by exact topics, ensuring you get problems th
 
 *   **Exact Topic Matching:** The main advantage is the ability to filter for problems that match *all* specified topics, whereas LeetCode's default filter shows problems that match *any* of the selected topics. This is especially useful when you want to practice problems with a specific combination of topics.
 *   **Speed:** The pre-built index of known problems makes the filtering process very fast, as it avoids the need for slow web scraping on every request.
-*   **Content-Based Tagging:** For problems where LeetCode doesn't provide explicit tags, this tool attempts to find relevant topics by searching the problem description. This can help you find problems that are not properly tagged on LeetCode.
+*   **Comprehensive Topic Database:** Uses a large database of over 3,500 LeetCode problems with their associated topics, eliminating the need for real-time scraping for known problems.
 *   **Simple UI:** The user interface is clean and straightforward, focusing on the core filtering functionality without the clutter of the LeetCode website.
 
 ## Features
@@ -15,10 +15,9 @@ A tool to filter LeetCode problems by exact topics, ensuring you get problems th
 - Get problems that contain ALL specified topics (e.g., "array" AND "hash table")
 - Clean, intuitive user interface with loading indicators
 - **Ultra-fast results with efficient indexing (O(1) lookup)**
-- Improved error handling and user feedback
-- Reduced initial loading time (no need for scraping for known problems)
-- Works with modern LeetCode UI
-- Content-based topic detection when tags aren't available
+- VS Code extension integration
+- Pre-built database of problem topics (no scraping needed for known problems)
+- Modern, responsive design with glassmorphism effects and animations
 
 ## Installation
 
