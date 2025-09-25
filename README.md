@@ -1,4 +1,4 @@
-# LeetCode Topic Filter😊
+# LeetCode Topic Filter
 
 A tool to filter LeetCode problems by exact topics, ensuring you get problems that match ALL specified topics rather than problems that match ANY of them.
 
